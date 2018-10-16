@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Buddy Gif</title>
+        <style type="text/css">
+        html, body {
+        margin: 0;
+        }
+        body {
+        overflow: hidden;
+        background-color: #dadada;
+        height: inherit;
+        }
+        </style>
+    </head>
+    <body>
+        <div>
+            <input id="buddy-name" placeholder="Add Buddy" />
+            <button id="add-me" onclick="addMe();">Add Buddy</button>
+        </div>
+        <div id="buddies"></div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
