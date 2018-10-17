@@ -1,4 +1,5 @@
 const express = require('express');
+const dotenv = require('dotenv').load();
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -10,8 +11,8 @@ const newBotBuddyQ = 'addBotBuddy';
 const newBotBuddyGifQ = 'addBotBuddyGif';
 
 app.use(express.static(__dirname + '/public'));
-app.get('/uuid', (req, res) => {
-    res.send(uuidv4);
+app.get('/api-key', (req, res) => {
+    res.send({ apiKey: process.env.GIPHY_API_KEY });
 });
 
 function onConnection(socket) {

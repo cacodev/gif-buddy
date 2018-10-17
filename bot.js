@@ -3,7 +3,7 @@ const uuidv4 = require('uuid/v4');
 
 const newBotBuddyQ = 'addBotBuddy';
 const newBotBuddyGifQ = 'addBotBuddyGif';
-const giphyKey = '';
+const giphyKey = process.env.GIPHY_API_KEY;
 const gifUrl = 'https://api.giphy.com/v1/gifs/random?api_key=' + giphyKey + '&tag=&rating=R';
 var https = require("https");
 

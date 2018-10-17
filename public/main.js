@@ -1,10 +1,21 @@
 'use strict';
 
-const giphyKey = '';
-
 var socket = io();
 socket.on('addBuddy', addBuddy);
 socket.on('addBuddyGif', addBuddyGif);
+var apiKey = '';
+
+function getApiKey() {
+    const req = new Request('/api-key');
+    return fetch(req)
+            .then((response) => {
+                return response.json();
+            })
+}
+
+getApiKey().then((jsonEnv) => {
+    apiKey = jsonEnv.apiKey;
+})
 
 function addBuddy(buddyData) {
     const buddyName = buddyData.name;
@@ -56,7 +67,7 @@ function addMeGif(name, id) {
 }
 
 function getRandoGif() {
-    const gifUrl = 'https://api.giphy.com/v1/gifs/random?api_key=' + giphyKey + '&tag=&rating=R';
+    const gifUrl = 'https://api.giphy.com/v1/gifs/random?api_key=' + apiKey + '&tag=&rating=R';
     const req = new Request(gifUrl);
     return fetch(req)
             .then((response) => {
