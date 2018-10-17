@@ -13,7 +13,7 @@ function addBuddy(buddyData) {
     img.insertAdjacentHTML('beforeend', buddyHtml);
 
     if (buddyData.gifUrl) {
-        img.setAttribute('src', gifUrl);
+        img.setAttribute('src', buddyData.gifUrl);
     }
 }
 
@@ -61,6 +61,5 @@ function getRandoGif() {
 }
 
 function parseGifUrl(responseData) {
-    console.log(responseData);
     return responseData.data.images.fixed_width_small.url;
 }
