@@ -16,19 +16,24 @@ function getRandoGif() {
     return new Promise((resolve, reject) => {
         https.get(gifUrl, (res) => {
             var body = '';
-            res.on('data', function(d) {
+            res.on('data', function (d) {
                 body += d;
             });
-            res.on('end', function() {
+            res.on('end', function () {
+                console.log(body);
                 body = JSON.parse(body);
                 resolve(body);
             });
+            res.on('error', (err) => {
+                console.log(err);
+                reject(err);
+            })
         })
     });
 }
 
 function parseGifUrl(responseData) {
-    return responseData.data.images.fixed_width_small.url;
+    return responseData.data.images.fixed_width.url;
 }
 
 amqp.connect('amqp://localhost', function (err, conn) {
@@ -40,18 +45,22 @@ amqp.connect('amqp://localhost', function (err, conn) {
             durable: false
         });
 
-        ch.sendToQueue(newBotBuddyQ, new Buffer(JSON.stringify({ name: buddyBotName })));
+        ch.sendToQueue(newBotBuddyQ, new Buffer(JSON.stringify({
+            name: buddyBotName
+        })));
 
         function doGif() {
             console.log("Do Gif");
             getRandoGif().then((jsonData) => {
-                const gifUrl = parseGifUrl(jsonData);
-                const meGif = {
-                    name: buddyBotName,
-                    gifUrl: gifUrl
-                };
-                ch.sendToQueue(newBotBuddyGifQ, new Buffer(JSON.stringify(meGif)))
-            }); 
+                if (jsonData && jsonData.data) {
+                    const gifUrl = parseGifUrl(jsonData);
+                    const meGif = {
+                        name: buddyBotName,
+                        gifUrl: gifUrl
+                    };
+                    ch.sendToQueue(newBotBuddyGifQ, new Buffer(JSON.stringify(meGif)));
+                }
+            });
         }
 
         doGif();
@@ -59,6 +68,3 @@ amqp.connect('amqp://localhost', function (err, conn) {
         setInterval(doGif, 10000);
     });
 });
-
-
-
