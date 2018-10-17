@@ -4,11 +4,15 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const amqp = require('amqplib/callback_api');
+const uuidv4 = require('uuid/v4');
 
 const newBotBuddyQ = 'addBotBuddy';
 const newBotBuddyGifQ = 'addBotBuddyGif';
 
 app.use(express.static(__dirname + '/public'));
+app.get('/uuid', (req, res) => {
+    res.send(uuidv4);
+});
 
 function onConnection(socket) {
     socket.on('addBuddy', (data) => {

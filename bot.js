@@ -1,4 +1,5 @@
 const amqp = require('amqplib/callback_api');
+const uuidv4 = require('uuid/v4');
 
 const newBotBuddyQ = 'addBotBuddy';
 const newBotBuddyGifQ = 'addBotBuddyGif';
@@ -9,8 +10,8 @@ var https = require("https");
 var args = process.argv.slice(2);
 
 const buddyBotName = args[0] ? args[0] : 'Buddy';
-
-console.log("Bot Name: " + buddyBotName);
+const buddyBotId = uuidv4();
+console.log("Bot Name: " + buddyBotName + " Bot Id: " + buddyBotId);
 
 function getRandoGif() {
     return new Promise((resolve, reject) => {
@@ -46,6 +47,7 @@ amqp.connect('amqp://localhost', function (err, conn) {
         });
 
         ch.sendToQueue(newBotBuddyQ, new Buffer(JSON.stringify({
+            id: buddyBotId,
             name: buddyBotName
         })));
 
@@ -55,6 +57,7 @@ amqp.connect('amqp://localhost', function (err, conn) {
                 if (jsonData && jsonData.data) {
                     const gifUrl = parseGifUrl(jsonData);
                     const meGif = {
+                        id: buddyBotId,
                         name: buddyBotName,
                         gifUrl: gifUrl
                     };

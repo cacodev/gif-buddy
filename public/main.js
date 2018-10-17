@@ -8,6 +8,7 @@ socket.on('addBuddyGif', addBuddyGif);
 
 function addBuddy(buddyData) {
     const buddyName = buddyData.name;
+    const buddyId = buddyData.id;
     const buddyHtml = '<article><img src="" id="gif-' + buddyName + '" /><div class="text"><h3>' + buddyName + '</h3></div></article>';
     const img = document.getElementById('buddy-board');
     img.insertAdjacentHTML('beforeend', buddyHtml);
@@ -18,19 +19,21 @@ function addBuddy(buddyData) {
 }
 
 function addBuddyGif(buddyData) {
+    const buddyId = buddyData.id;
     const buddyName = buddyData.name;
     const gifUrl = buddyData.gifUrl;
 
-    if (document.getElementById('gif-' + buddyName)) {
-        document.getElementById('gif-' + buddyName).setAttribute('src', gifUrl);
+    if (document.getElementById('gif-' + buddyId)) {
+        document.getElementById('gif-' + buddyId).setAttribute('src', gifUrl);
     } else {
         addBuddy(buddyData);
     }
 }
 
 function addMe() {
+    const id = uuidv4();
     const name = document.getElementById('buddy-name').value;
-    const meHtml = '<article><img src="" id="gif-' + name + '" /><div class="text"><h3>' + name + '</h3><button onclick="addMeGif(\'' + name + '\');">New Gif</button></div></article>';
+    const meHtml = '<article><img src="" id="gif-' + id + '" /><div class="text"><h3>' + name + '</h3><button onclick="addMeGif(\'' + name + '\',\'' + id + '\');">New Gif</button></div></article>';
     document.getElementById('buddy-board').insertAdjacentHTML('afterbegin', meHtml);
     let me = {
         name: name
@@ -39,14 +42,15 @@ function addMe() {
     addMeGif(name);
 }
 
-function addMeGif(name) {
+function addMeGif(name, id) {
     getRandoGif().then((jsonData) => {
         const gifUrl = parseGifUrl(jsonData);
         const meGif = {
+            id: id,
             name: name,
             gifUrl: gifUrl
         };
-        document.getElementById('gif-' + name).setAttribute('src', gifUrl);
+        document.getElementById('gif-' + id).setAttribute('src', gifUrl);
         socket.emit('addBuddyGif', meGif);
     });
 }

@@ -8,6 +8,7 @@
         #buddy-board {
             margin: 10px;
         }
+
         #add-buddy {
             margin: 10px;
         }
@@ -21,6 +22,8 @@
         }
 
         #add-buddy>input {
+            width: 162px;
+            margin-right: 16px;
             padding: 8px;
         }
 
@@ -52,16 +55,19 @@
             width: 100%;
         }
     </style>
+
 </head>
 
-<body>
+<main>
     <section id="add-buddy">
         <input id="buddy-name" placeholder="Add Buddy" />
         <button id="add-me" onclick="addMe();">Add Buddy</button>
     </section>
     <section id="buddy-board" class="grid"></section>
-    </main>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="main.js"></script>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="main.js"></script>
+<script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script>
 
 </html>
