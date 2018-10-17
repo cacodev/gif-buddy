@@ -1,26 +1,67 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Buddy Gif</title>
-        <style type="text/css">
-        html, body {
-        margin: 0;
+
+<head>
+    <meta charset="UTF-8">
+    <title>Buddy Gif</title>
+    <style type="text/css">
+        #buddy-board {
+            margin: 10px;
         }
-        body {
-        overflow: hidden;
-        background-color: #dadada;
-        height: inherit;
+        #add-buddy {
+            margin: 10px;
         }
-        </style>
-    </head>
-    <body>
-        <div>
-            <input id="buddy-name" placeholder="Add Buddy" />
-            <button id="add-me" onclick="addMe();">Add Buddy</button>
-        </div>
-        <div id="buddies"></div>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="main.js"></script>
-    </body>
+
+        #add-buddy>button {
+            background: green;
+            border: 0;
+            color: white;
+            padding: 10px;
+            width: 100px;
+        }
+
+        #add-buddy>input {
+            padding: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-gap: 20px;
+            align-items: start;
+        }
+
+        .grid>article {
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .grid>article img {
+            max-width: 100%;
+        }
+
+        .text {
+            padding: 0 20px 20px;
+        }
+
+        .text>button {
+            background: gray;
+            border: 0;
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="add-buddy">
+        <input id="buddy-name" placeholder="Add Buddy" />
+        <button id="add-me" onclick="addMe();">Add Buddy</button>
+    </section>
+    <section id="buddy-board" class="grid"></section>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+
 </html>

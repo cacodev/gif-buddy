@@ -8,8 +8,8 @@ socket.on('addBuddyGif', addBuddyGif);
 
 function addBuddy(buddyData) {
     const buddyName = buddyData.name;
-    const buddyHtml = '<div><img src="" id="gif-' + buddyName + '" /><br /><p>' + buddyName + '</p></div>';
-    const img = document.getElementById('buddies');
+    const buddyHtml = '<article><img src="" id="gif-' + buddyName + '" /><div class="text"><h3>' + buddyName + '</h3></div></article>';
+    const img = document.getElementById('buddy-board');
     img.insertAdjacentHTML('beforeend', buddyHtml);
 
     if (buddyData.gifUrl) {
@@ -30,8 +30,8 @@ function addBuddyGif(buddyData) {
 
 function addMe() {
     const name = document.getElementById('buddy-name').value;
-    const meHtml = '<div><img src="" id="gif-' + name + '" /><br /><p>' + name + '</p><button onclick="addMeGif(\'' + name + '\');">New Gif</button></div>';
-    document.getElementById('buddies').insertAdjacentHTML('afterbegin', meHtml);
+    const meHtml = '<article><img src="" id="gif-' + name + '" /><div class="text"><h3>' + name + '</h3><button onclick="addMeGif(\'' + name + '\');">New Gif</button></div></article>';
+    document.getElementById('buddy-board').insertAdjacentHTML('afterbegin', meHtml);
     let me = {
         name: name
     };
@@ -61,5 +61,5 @@ function getRandoGif() {
 }
 
 function parseGifUrl(responseData) {
-    return responseData.data.images.fixed_width_small.url;
+    return responseData.data.images.fixed_width.url;
 }
