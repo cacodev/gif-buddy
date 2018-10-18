@@ -1,5 +1,6 @@
 const amqp = require('amqplib/callback_api');
 const uuidv4 = require('uuid/v4');
+const dotenv = require('dotenv').load();
 
 const newBotBuddyQ = 'addBotBuddy';
 const newBotBuddyGifQ = 'addBotBuddyGif';
@@ -21,12 +22,10 @@ function getRandoGif() {
                 body += d;
             });
             res.on('end', function () {
-                console.log(body);
                 body = JSON.parse(body);
                 resolve(body);
             });
             res.on('error', (err) => {
-                console.log(err);
                 reject(err);
             })
         })
