@@ -20,7 +20,7 @@ getApiKey().then((jsonEnv) => {
 function addBuddy(buddyData) {
     const buddyName = buddyData.name;
     const buddyId = buddyData.id;
-    const buddyHtml = '<article><img src="" id="gif-' + buddyName + '" /><div class="text"><h3>' + buddyName + '</h3></div></article>';
+    const buddyHtml = '<article><img src="" id="gif-' + buddyId + '" /><div class="text"><h3>' + buddyName + '</h3></div></article>';
     const img = document.getElementById('buddy-board');
     img.insertAdjacentHTML('beforeend', buddyHtml);
 
