@@ -50,7 +50,7 @@ function addMe() {
         name: name
     };
     socket.emit('addBuddy', me);
-    addMeGif(name);
+    addMeGif(name, id);
 }
 
 function addMeGif(name, id) {
