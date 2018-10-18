@@ -47,6 +47,7 @@ function addMe() {
     const meHtml = '<article><img src="" id="gif-' + id + '" /><div class="text"><h3>' + name + '</h3><button onclick="addMeGif(\'' + name + '\',\'' + id + '\');">New Gif</button></div></article>';
     document.getElementById('buddy-board').insertAdjacentHTML('afterbegin', meHtml);
     let me = {
+        id: id,
         name: name
     };
     socket.emit('addBuddy', me);
